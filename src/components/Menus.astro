@@ -15,7 +15,7 @@ const currentPath = pathname;
             menus.map((menu) => (
                 <li>
                     <a
-                        class={currentPath === menu.url ? "active" : ""}
+                        class={currentPath.includes(menu.url) ? "active" : ""}
                         href={menu.url}
                     >
                         {menu.title}
@@ -27,7 +27,7 @@ const currentPath = pathname;
                                     menu.children.map((child) => (
                                         <li>
                                             <a
-                                                class={currentPath === child.url ? "active" : ""}
+                                                class={currentPath.includes(child.url) ? "active" : ""}
                                                 href={child.url}
                                             >
                                                 {child.title}
