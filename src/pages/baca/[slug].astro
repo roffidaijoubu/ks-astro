@@ -3,6 +3,7 @@
 import fetchArticles from "../../scripts/fetchArticles";
 import Menus from "../../components/Menus.astro";
 import { ViewTransitions } from 'astro:transitions';
+import OramaSearch from "../../components/OramaSearch.svelte";
 
 
 const API_URL = "https://ks.valocg.xyz/wp-json/api/articles";
@@ -22,15 +23,33 @@ const article = json.find((article) => article.slug === slug);
 const title = article.title;
 ---
 
-<html data-theme="dark">
+<html lang="id-ID" data-theme="dark">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>{title}</title>
+        <script>
+            // Astro will do the job of bundling everything for you
+            import { getOramaDB, search } from "@orama/plugin-astro/client"
+        
+            // We load the DB that we generated at build time, this is an asynchronous
+            // operation, so we must either await, or rely on `.then` calls.
+            const db = await getOramaDB('mydb')
+        
+            // Now we can search inside our DB. Of course, feel free to use it in more
+            // interesting ways.
+            console.log('Search Results')
+            console.log(await search(db, { term: 'Ali' }))
+          </script>
     </head>
     
     <body>
         <ViewTransitions />
+        <header>
+            <div class="container mx-auto px-5">
+                <OramaSearch client:load />
+            </div>
+        </header>
         <div class="flex relative h-full ">
             <Menus />
             <main class="container mx-auto px-5" transition:animate="slide">
