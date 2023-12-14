@@ -1,0 +1,45 @@
+---
+const API_URL = "https://ks.valocg.xyz/wp-json/api/menu";
+
+const res = await fetch(API_URL);
+const menus = await res.json();
+
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname;
+---
+
+<!-- loop through menus -->
+<nav class="sticky top-2 self-start">
+    <ul class="menu">
+        {
+            menus.map((menu) => (
+                <li>
+                    <a
+                        class={currentPath === menu.url ? "active" : ""}
+                        href={menu.url}
+                    >
+                        {menu.title}
+                    </a>
+                    {
+                        Array.isArray(menu.children) && menu.children.length > 0 && (
+                            <ul class="submenu">
+                                {
+                                    menu.children.map((child) => (
+                                        <li>
+                                            <a
+                                                class={currentPath === child.url ? "active" : ""}
+                                                href={child.url}
+                                            >
+                                                {child.title}
+                                            </a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        )
+                    }
+                </li>
+            ))
+        }
+    </ul>
+</nav>

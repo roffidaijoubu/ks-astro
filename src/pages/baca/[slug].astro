@@ -1,0 +1,42 @@
+---
+// src/pages/[slug].astro
+import fetchArticles from "../../scripts/fetchArticles";
+import Menus from "../../components/Menus.astro";
+import { ViewTransitions } from 'astro:transitions';
+
+
+const API_URL = "https://ks.valocg.xyz/wp-json/api/articles";
+
+export async function getStaticPaths() {
+    const articles = await fetchArticles();
+    return articles.map((article) => {
+        return { params: { slug: article.slug } };
+    });
+}
+
+const { slug } = Astro.params;
+const res = await fetch(API_URL);
+const json = await res.json();
+
+const article = json.find((article) => article.slug === slug);
+const title = article.title;
+---
+
+<html data-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>[title]</title>
+    </head>
+    
+    <body>
+        <ViewTransitions />
+        <div class="flex relative h-full ">
+            <Menus />
+            <main class="container mx-auto px-5" transition:animate="slide">
+                <h1 class="text-xl font-bold mb-4">{article.title}</h1>
+                <div class="prose" set:html={JSON.parse(article.content)} />
+            </main>
+        </div>
+    </body>
+</html>
