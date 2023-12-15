@@ -15,7 +15,7 @@
       let hits = res.hits.map((hit) => ({
         title: hit.document.title,
         path: hit.document.path,
-        content: processContent(searchTerm, hit.document.content),
+        // content: processContent(searchTerm, hit.document.content),
       }));
 
       showDiv.set(hits.length > 0);
@@ -68,30 +68,28 @@
   }
 </script>
 
-<div class="p-4">
-  <input
-    type="text"
-    class="searchInputBox h-15 p-2 border rounded"
-    on:input={(event) => search(event.target.value)}
-  />
-  {#if $showDiv}
-    <div id="searchResults" class="fixed border rounded p-5 z-10 bg-base-200">
-      <ul class="menu">
-        {#each $result as element, index}
-          <li>
-            <a href={element.path} class="block">
-              <div class="text-base-content">
-                <div class="font-bold">{element.title}</div>
-                <div class="text-sm">{@html element.content}</div>
-              </div>
-            </a>
-          </li>
+<input
+  type="text"
+  class="searchInputBox p-5 w-full"
+  on:input={(event) => search(event.target.value)}
+/>
+{#if $showDiv}
+  <div id="searchResults" class="fixed border rounded p-5 z-10 bg-base-200">
+    <ul class="menu">
+      {#each $result as element, index}
+        <li>
+          <a href={element.path} class="block">
+            <div class="text-base-content">
+              <div class="font-bold">{element.title}</div>
+              <!-- <div class="text-sm">{@html element.content}</div> -->
+            </div>
+          </a>
+        </li>
 
-          {#if index !== $result.length - 1}
-            <br />
-          {/if}
-        {/each}
-      </ul>
-    </div>
-  {/if}
-</div>
+        {#if index !== $result.length - 1}
+          <br />
+        {/if}
+      {/each}
+    </ul>
+  </div>
+{/if}

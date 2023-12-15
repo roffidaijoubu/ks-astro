@@ -46,15 +46,24 @@ const title = article.title;
     <body>
         <ViewTransitions />
         <header>
-            <div class="container mx-auto px-5">
+            <div class="">
                 <OramaSearch client:load />
             </div>
         </header>
-        <div class="flex relative h-full ">
+        <div class="flex relative h-full pt-5">
             <Menus />
             <main class="container mx-auto px-5" transition:animate="slide">
-                <h1 class="text-xl font-bold mb-4">{article.title}</h1>
-                <div class="prose" set:html={JSON.parse(article.content)} />
+                <h1 class="text-[72px] font-bold mb-4">{article.title}</h1>
+                <div class="prose max-w-none" set:html={JSON.parse(article.content)} />
+                <section id="footnotes" class="prose mb-5 mt-4 py-2 border-t-2 border-base-content/50 text-sm">
+                    <ol>
+                        {article.footnotes.map(footnote=>(
+                            <li id={`${footnote.id}`}>
+                                <div set:html={footnote.content}></div> <a href={`#${footnote.id}-link`} class="text-base-content/50">↩</a>
+                            </li>
+                        ))}
+                    </ol>
+                </section>
             </main>
         </div>
     </body>
