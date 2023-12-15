@@ -57,7 +57,7 @@ const title = article.title;
                 <div class="prose max-w-none" set:html={JSON.parse(article.content)} />
                 <section id="footnotes" class="prose mb-5 mt-4 py-2 border-t-2 border-base-content/50 text-sm">
                     <ol>
-                        {article.footnotes.map(footnote=>(
+                        {article.footnotes && article.footnotes.map(footnote=>(
                             <li id={`${footnote.id}`}>
                                 <div set:html={footnote.content}></div> <a href={`#${footnote.id}-link`} class="text-base-content/50">↩</a>
                             </li>
