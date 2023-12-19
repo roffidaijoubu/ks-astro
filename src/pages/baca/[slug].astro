@@ -2,9 +2,8 @@
 // src/pages/[slug].astro
 import fetchArticles from "../../scripts/fetchArticles";
 import Menus from "../../components/Menus.astro";
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 import OramaSearch from "../../components/OramaSearch.svelte";
-
 
 const API_URL = "https://ks.valocg.xyz/wp-json/api/articles";
 
@@ -21,6 +20,9 @@ const json = await res.json();
 
 const article = json.find((article) => article.slug === slug);
 const title = article.title;
+
+import '../../styles.css';
+import '@fontsource/amiri';
 ---
 
 <html lang="id-ID" data-theme="dark">
@@ -30,19 +32,19 @@ const title = article.title;
         <title>{title}</title>
         <script>
             // Astro will do the job of bundling everything for you
-            import { getOramaDB, search } from "@orama/plugin-astro/client"
-        
+            import { getOramaDB, search } from "@orama/plugin-astro/client";
+
             // We load the DB that we generated at build time, this is an asynchronous
             // operation, so we must either await, or rely on `.then` calls.
-            const db = await getOramaDB('mydb')
-        
+            const db = await getOramaDB("mydb");
+
             // Now we can search inside our DB. Of course, feel free to use it in more
             // interesting ways.
-            console.log('Search Results')
-            console.log(await search(db, { term: 'Ali' }))
-          </script>
+            console.log("Search Results");
+            console.log(await search(db, { term: "Ali" }));
+        </script>
     </head>
-    
+
     <body>
         <ViewTransitions />
         <header>
@@ -52,18 +54,36 @@ const title = article.title;
         </header>
         <div class="flex relative h-full pt-5">
             <Menus />
-            <main class="container mx-auto px-5" transition:animate="slide">
+            <main class="container mx-auto px-5" transition:animate="fade">
                 <h1 class="text-[72px] font-bold mb-4">{article.title}</h1>
-                <div class="prose max-w-none" set:html={JSON.parse(article.content)} />
-                <section id="footnotes" class="prose mb-5 mt-4 py-2 border-t-2 border-base-content/50 text-sm">
-                    <ol>
-                        {article.footnotes && article.footnotes.map(footnote=>(
-                            <li id={`${footnote.id}`}>
-                                <div set:html={footnote.content}></div> <a href={`#${footnote.id}-link`} class="text-base-content/50">↩</a>
-                            </li>
-                        ))}
-                    </ol>
-                </section>
+                <div
+                    class="prose lg:max-w-[900px]"
+                    set:html={JSON.parse(article.content)}
+                />
+                
+                {article.footnotes && 
+                    <section
+                        id="footnotes"
+                        class="prose lg:max-w-[900px] mb-5 mt-4 py-2 border-t-2 border-base-content/50 text-sm"
+                    >
+                        <ol>
+                            {
+                                
+                                    article.footnotes.map((footnote) => (
+                                        <li id={`${footnote.id}`}>
+                                            <div set:html={footnote.content} />{" "}
+                                            <a
+                                                href={`#${footnote.id}-link`}
+                                                class="text-base-content/50"
+                                            >
+                                                ↩
+                                            </a>
+                                        </li>
+                                    ))
+                            }
+                        </ol>
+                    </section>
+                }
             </main>
         </div>
     </body>

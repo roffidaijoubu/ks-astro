@@ -1,0 +1,25 @@
+.prose :where(blockquote p:first-of-type):not( :where([class~="not-prose"], [class~="not-prose"] *))::before {
+    content: none !important;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)){
+    font-style: normal !important;
+    font-size: 1.25rem !important;
+    font-family: 'Amiri', sans-serif !important;
+
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *))>cite{
+    font-style: italic !important;
+    font-weight: normal !important;
+    font-size: .75rem !important;
+}
+
+/* last child of blockquite in prose */
+.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *))>:nth-last-child(2){
+    margin-bottom: 0 !important;
+}
+
+*{
+    scroll-behavior: smooth !important;
+}

@@ -10,7 +10,7 @@ const currentPath = pathname;
 
 <!-- loop through menus -->
 <nav class="sticky top-2 self-start">
-    <ul class="menu">
+    <ul class="menu flex flex-col gap-1">
         {
             menus.map((menu) => (
                 <li>
@@ -22,7 +22,7 @@ const currentPath = pathname;
                     </a>
                     {
                         Array.isArray(menu.children) && menu.children.length > 0 && (
-                            <ul class="submenu">
+                            <ul class="submenu flex flex-col gap-1 pt-1">
                                 {
                                     menu.children.map((child) => (
                                         <li>
