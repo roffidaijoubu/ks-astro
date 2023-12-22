@@ -4,8 +4,8 @@
 
 .prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)){
     font-style: normal !important;
-    font-size: 1.25rem !important;
-    font-family: 'Amiri', sans-serif !important;
+    /* font-size: 1.25rem !important; */
+    /* font-family: 'Amiri', sans-serif !important; */
 
 }
 
@@ -22,4 +22,14 @@
 
 *{
     scroll-behavior: smooth !important;
+}
+
+.wp-block-embed-youtube iframe{
+    width: 100% !important;
+    aspect-ratio: 16/9;
+    height: auto !important;
+}
+
+.prose h2{
+    @apply text-3xl font-bold mb-4 border-b-[1px] border-base-content/30 pb-3;
 }

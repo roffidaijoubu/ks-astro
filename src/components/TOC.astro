@@ -1,0 +1,73 @@
+---
+// TableOfContents.astro
+let { article } = Astro.props;
+---
+
+<ul id="toc" class="menu sticky top-2 self-start pt-5 md:w-96">
+    {
+        article.toc.map((toc) => (
+            <li class="menu-item">
+                <a href={`${toc.url}`}>{toc.label}</a>
+            </li>
+        ))
+    }
+    {
+        article.footnotes && (
+            <li class="menu-item">
+                <a href="#footnotes">Catatan Kaki</a>
+            </li>
+        )
+    }
+</ul>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        let activeEntries = 0;
+
+        const setCurrentHeading: IntersectionObserverCallback = (entries) => {
+            // loop to each entries (headings) in the page
+            for (let entry of entries) {
+                // equivalent to the slug returned from pageHeadings
+                const { id } = entry.target;
+                // get the TOC link's element for the current entry
+                const tocLinkEl = document.querySelector(
+                    `#toc a[href='#${id}']`
+                );
+                if (!tocLinkEl) return;
+
+                if (entry.isIntersecting) {
+                    activeEntries++;
+                    // remove active class from all links
+                    document
+                        .querySelectorAll("#toc a")
+                        .forEach((e) => e.classList.remove("active"));
+                    // add active class to the currently active entry
+                    tocLinkEl.classList.add("active");
+                } else {
+                    activeEntries--;
+                }
+            }
+
+            // If no entries are active, remove the active class from all links
+            if (activeEntries === 0) {
+                document
+                    .querySelectorAll("#toc a")
+                    .forEach((e) => e.classList.remove("active"));
+            }
+        };
+
+        const observerOptions = {
+            threshold: 1,
+            rootMargin: "0px 0px -66%",
+        };
+
+        const observer = new IntersectionObserver(
+            setCurrentHeading,
+            observerOptions
+        );
+        // select all headings to observe
+        const elToObserve = document.querySelectorAll("article :is(h2,h3)");
+        // finally, observe the elements
+        elToObserve.forEach((el) => observer.observe(el));
+    });
+</script>

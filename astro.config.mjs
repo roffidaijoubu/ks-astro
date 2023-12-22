@@ -3,11 +3,16 @@ import tailwind from "@astrojs/tailwind";
 import orama from '@orama/plugin-astro';
 import react from "@astrojs/react";
 import vue from "@astrojs/vue";
-
 import svelte from "@astrojs/svelte";
+
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site:'https://kenalisyiah.com',
+  image: {
+    domains: ["ucarecdn.com"]
+  },
   integrations: [tailwind(), orama({
     // We can generate more than one DB, with different configurations
     mydb: {
@@ -18,7 +23,7 @@ export default defineConfig({
 
       // Optional. ['body'] by default. Use it to constraint what is used to
       // index a page.
-      contentSelectors: ['main']
+      contentSelectors: ['#main-content']
     }
-  }), react(), vue(), svelte()]
+  }), react(), vue(), svelte(), sitemap()]
 });

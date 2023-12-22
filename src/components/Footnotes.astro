@@ -1,0 +1,23 @@
+---
+let {footnotes} = Astro.props;
+---
+{
+    footnotes && (
+        <section class="prose font-serif lg:max-w-none mb-5 mt-4 py-2 border-t-2 border-base-content/50 text-sm">
+            <h3 id="footnotes">Catatan Kaki</h3>
+            <ol>
+                {footnotes.map((footnote) => (
+                    <li id={`${footnote.id}`}>
+                        <div set:html={footnote.content} />{" "}
+                        <a
+                            href={`#${footnote.id}-link`}
+                            class="text-base-content/50"
+                        >
+                            ↩
+                        </a>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )
+}
