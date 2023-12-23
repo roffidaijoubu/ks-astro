@@ -134,10 +134,11 @@ import { ThemeSwitch } from "astro-color-scheme";
                                     article.featured_image && (
                                         <div class="relative -mb-5 opacity-40">
                                             <div class="absolute h-full w-full inset-0 bg-gradient-to-t from-base-300 from-10% to-[90%] opacity-100" />
-                                            <Img
-                                                layout="fullWidth"
+                                            <Image
+                                                class="object-cover w-full h-[400px] md:h-[600px]"
                                                 src={article.featured_image.url}
-                                                aspect={1.78}
+                                                width={article.featured_image.width}
+                                                height={article.featured_image.height}
                                                 alt={article.title}
                                             />
                                         </div>
