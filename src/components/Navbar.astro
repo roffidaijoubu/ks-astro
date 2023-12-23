@@ -1,0 +1,69 @@
+---
+import OramaSearch from "../../components/OramaSearch.svelte";
+import { Image } from "astro:assets";
+import { ThemeSwitch } from "astro-color-scheme";
+import { Icon } from "astro-iconify";
+---
+
+<header
+    class="sticky top-0 z-50 h-16 bg-base-100/80 backdrop-blur-xl flex px-5 items-center"
+>
+    <a href="/">
+        <Image
+        class="h-10 w-auto hidden dark:block"
+        src="/img/logo-dark.svg"
+        width="1300"
+        height="300"
+        alt="Logo"
+        />
+        <Image
+        class="h-10 w-auto dark:hidden"
+        src="/img/logo-light.svg"
+        width="1300"
+        height="300"
+        alt="Logo"
+        />
+    </a>
+    <!-- <div class="">
+                <OramaSearch client:load />
+            </div> -->
+    <div class="ml-auto" transition:persist>
+        <ThemeSwitch strategy="checkbox">
+            <label for="themeSwitcher" class="swap swap-rotate">
+                <!-- this hidden checkbox controls the state -->
+                <input
+                    type="checkbox"
+                    name="themeSwitcher"
+                    id="themeSwitcher"
+                />
+
+                <Icon
+                    name="heroicons:moon"
+                    class="dark:hidden block fill-current mt-1 w-6 h-6"
+                />
+                <Icon
+                    name="heroicons:sun"
+                    class="dark:block hidden fill-current mt-1 w-6 h-6"
+                />
+            </label>
+        </ThemeSwitch>
+        <script>
+            // save the current theme to localStorage
+            const themeSwitcher = document.querySelector("#themeSwitcher");
+            const html = document.querySelector("html");
+            themeSwitcher.addEventListener("change", (e) => {
+                localStorage.setItem(
+                    "theme",
+                    html.getAttribute("data-theme")
+                    );
+                });
+            // set the html theme to the saved theme on Astro page load
+            document.addEventListener("astro:page-load", () => {
+                const theme = localStorage.getItem("theme");
+                if (theme) {
+                    html.setAttribute("data-theme", theme);
+                }
+            });
+        </script>
+    </div>
+</header>

@@ -11,6 +11,8 @@ import critters from "astro-critters";
 
 import robotsTxt from "astro-robots-txt";
 
+import purgecss from "astro-purgecss";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kenalisyiah.com',
@@ -29,5 +31,5 @@ export default defineConfig({
       // index a page.
       contentSelectors: ['#main-content']
     }
-  }), react(), vue(), svelte(), sitemap(), astroImageTools, critters(), robotsTxt()]
+  }), react(), vue(), svelte(), sitemap(), astroImageTools, critters(), robotsTxt(), purgecss()]
 });

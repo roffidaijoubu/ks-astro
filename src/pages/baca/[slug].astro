@@ -1,11 +1,10 @@
 ---
 // src/pages/[slug].astro
 import fetchArticles from "../../scripts/fetchArticles";
-import Menus from "../../components/Menus.astro";
+import SideMenus from "../../components/SideMenus.astro";
 import TOC from "../../components/TOC.astro";
 import Footnotes from "../../components/Footnotes.astro";
 import { ViewTransitions } from "astro:transitions";
-import OramaSearch from "../../components/OramaSearch.svelte";
 
 const API_URL = "https://ks.valocg.xyz/wp-json/api/articles";
 
@@ -28,11 +27,11 @@ import "@fontsource/amiri";
 import "@fontsource-variable/lora";
 import "@fontsource-variable/montserrat";
 import "@fontsource/titillium-web";
-import { Img } from "astro-imagetools/components";
 import { Head } from "astro-capo";
 import { Icon } from "astro-iconify";
 import { Image } from "astro:assets";
-import { ThemeSwitch } from "astro-color-scheme";
+import Navbar from "../../components/Navbar.astro";
+import { SEO } from "astro-seo";
 ---
 
 <html lang="id-ID" data-theme="dark">
@@ -40,7 +39,29 @@ import { ThemeSwitch } from "astro-color-scheme";
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" href="/favicon/favicon.ico" />
-        <title>{title}</title>
+        <SEO
+            title={title}
+            titleTemplate="%s | KenaliSyiah"
+            description={article.excerpt}
+            openGraph={{
+                basic: {
+                    title: title,
+                    type: "article",
+                    image: article.featured_image.url,
+                },
+                optional:{
+                    locale: "id_ID",
+                    siteName: "KenaliSyiah",
+                }
+            }}
+            twitter={{
+                card: "summary_large_image",
+                site: "@kenalisyiah",
+                creator: "@kenalisyiah",
+                description: article.excerpt,
+                image: article.featured_image.url,
+            }}
+        />
         <script>
             // Astro will do the job of bundling everything for you
             import { getOramaDB, search } from "@orama/plugin-astro/client";
@@ -48,52 +69,16 @@ import { ThemeSwitch } from "astro-color-scheme";
             // We load the DB that we generated at build time, this is an asynchronous
             // operation, so we must either await, or rely on `.then` calls.
             const db = await getOramaDB("mydb");
-
-            // Now we can search inside our DB. Of course, feel free to use it in more
-            // interesting ways.
-            console.log("Search Results");
-            console.log(await search(db, { term: "Ali" }));
         </script>
     </Head>
 
     <body>
         <ViewTransitions />
-        <header
-            class="sticky top-0 z-50 h-16 bg-base-100/80 backdrop-blur-xl flex px-5 items-center"
-        >
-            <Image
-                class="h-10 w-auto hidden dark:block"
-                src="/img/logo-dark.svg"
-                width="1300"
-                height="300"
-                alt="Logo"
-            />
-            <Image
-                class="h-10 w-auto dark:hidden"
-                src="/img/logo-light.svg"
-                width="1300"
-                height="300"
-                alt="Logo"
-            />
-            <!-- <div class="">
-                <OramaSearch client:load />
-            </div> -->
-            <div class="ml-auto" transition:persist>
-                <ThemeSwitch strategy="checkbox">
-                    <label class="swap swap-rotate">
-                        <!-- this hidden checkbox controls the state -->
-                        <input type="checkbox" />
-
-                        <Icon name="heroicons:moon" class="dark:hidden block fill-current mt-1 w-6 h-6" />
-                        <Icon name="heroicons:sun" class="dark:block hidden fill-current mt-1 w-6 h-6" />
-                    </label>
-                </ThemeSwitch>
-            </div>
-        </header>
+        <Navbar />
         <div class="flex relative h-full">
-            <Menus />
+            <SideMenus />
             <div class="w-full">
-                <div class="flex bg-base-300">
+                <div class="flex dark:bg-base-300 bg-base-100">
                     <main
                         class="pb-10 grow-0 w-full lg:max-w-[1100px]"
                         transition:animate="fade"
@@ -107,8 +92,13 @@ import { ThemeSwitch } from "astro-color-scheme";
                                             <Image
                                                 class="object-cover w-full h-[400px] md:h-[600px]"
                                                 src={article.featured_image.url}
-                                                width={article.featured_image.width}
-                                                height={article.featured_image.height}
+                                                width={
+                                                    article.featured_image.width
+                                                }
+                                                height={
+                                                    article.featured_image
+                                                        .height
+                                                }
                                                 alt={article.title}
                                             />
                                         </div>
@@ -144,10 +134,10 @@ import { ThemeSwitch } from "astro-color-scheme";
                                             class="w-4 h-4 mr-auto"
                                         />
                                         <div class="text-right">
-                                            <div class="text-xs mb-2 font-semibold">
+                                            <div class="text-xs mb-2 font-semibold ">
                                                 Sebelumnya
                                             </div>
-                                            <div class="">
+                                            <div class="font-titillium">
                                                 {article.nav.prev.title}
                                             </div>
                                         </div>
@@ -157,14 +147,14 @@ import { ThemeSwitch } from "astro-color-scheme";
                             {
                                 article.nav.next && (
                                     <a
-                                        class="flex items-center justify-start w-[50%] btn btn-outline py-6 h-fit px-4"
+                                        class="flex items-center justify-start w-[50%] btn btn-outline py-6 h-fit px-4 ml-auto"
                                         href={article.nav.next.url}
                                     >
                                         <div class="text-left">
                                             <div class="text-xs mb-2 font-semibold">
                                                 Selanjutnya
                                             </div>
-                                            <div class="">
+                                            <div class="font-titillium">
                                                 {article.nav.next.title}
                                             </div>
                                         </div>
