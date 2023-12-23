@@ -22,7 +22,13 @@ const json = await res.json();
 const article = json.find((article) => article.slug === slug);
 const title = article.title;
 const description = article.excerpt;
-const ogImg = `https://api.vustadz.com/api/og/title=${encodeURIComponent(title)}/img=${Buffer.from(article.featured_image.url).toString('base64')}/logo=${Buffer.from("https://ucarecdn.com/70c79e80-7979-4da9-9fe6-f0a7f1c08ca3/logoicon.png").toString('base64')}`;
+const ogImg = `https://api.vustadz.com/api/og/title=${encodeURIComponent(
+    title
+)}/img=${Buffer.from(article.featured_image.url).toString(
+    "base64"
+)}/logo=${Buffer.from(
+    "https://ucarecdn.com/70c79e80-7979-4da9-9fe6-f0a7f1c08ca3/logoicon.png"
+).toString("base64")}`;
 
 import "../../styles.css";
 import "@fontsource/amiri";
@@ -39,7 +45,7 @@ import { SEO } from "astro-seo";
 <html lang="id-ID" data-theme="dark">
     <Head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon/favicon.ico" />
         <SEO
             title={title}
@@ -51,11 +57,11 @@ import { SEO } from "astro-seo";
                     type: "article",
                     image: ogImg,
                 },
-                optional:{
+                optional: {
                     locale: "id_ID",
                     siteName: "KenaliSyiah",
                     description: description,
-                }
+                },
             }}
             twitter={{
                 title: title,
@@ -79,9 +85,44 @@ import { SEO } from "astro-seo";
     <body>
         <ViewTransitions />
         <Navbar />
-        <div class="flex relative h-full">
-            <SideMenus />
-            <div class="w-full">
+        <div
+            class="sticky px-5 top-16 z-50 flex lg:hidden items-center justify-between h-12 bg-base-200 text-base-content"
+        >
+            <label for="my-drawer" class="flex items-center drawer-button gap-1 cursor-pointer">
+                <Icon name="solar:hamburger-menu-bold" class="w-6 h-6" />
+                <span>
+                    Menu
+                </span>
+            </label>
+
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="h-full m-1 flex items-center gap-1">
+                    Daftar Isi
+                    <Icon name="solar:list-bold" class="w-6 h-6" />
+                </div>
+                <ul id="toc" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box flex flex-col gap-1">
+                    {
+                        article.toc.map((toc) => (
+                            <li class="max-w-[90vw] w-[300px]">
+                                <a href={`${toc.url}`}>{toc.label}</a>
+                            </li>
+                        ))
+                    }
+                    {
+                        article.footnotes && (
+                            <li class="max-w-[90vw] w-[300px]">
+                                <a href="#footnotes">Catatan Kaki</a>
+                            </li>
+                        )
+                    }
+                </ul>
+              </div>
+        </div>
+        <div class="drawer lg:drawer-open">
+            <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+            <div class="drawer-content">
+                <!-- Page content here -->
+
                 <div class="flex dark:bg-base-300 bg-base-100">
                     <main
                         class="pb-10 grow-0 w-full lg:max-w-[1100px]"
@@ -109,28 +150,28 @@ import { SEO } from "astro-seo";
                                     )
                                 }
                                 <h1
-                                    class="text-3xl md:text-[40px] font-bold mb-4 font-montserrat relative z-10 text-base-content px-11 pt-5 leading-tight"
+                                    class="text-3xl md:text-[40px] font-bold mb-4 font-montserrat relative z-10 text-base-content px-5 md:px-11 pt-5 leading-tight"
                                 >
                                     {article.title}
                                 </h1>
                                 <div
-                                    class="mt-3 mb-5 relative z-10 text-base-content px-11 pb-4"
+                                    class="mt-3 mb-5 relative z-10 text-base-content px-5 md:px-11 pb-4"
                                 >
                                     Waktu membaca: {article.reading_time} menit
                                 </div>
                             </section>
                             <article
-                                class="prose font-serif max-w-none px-11"
+                                class="prose font-serif max-w-none px-5 md:px-11"
                                 set:html={JSON.parse(article.content)}
                             />
 
                             <Footnotes footnotes={article.footnotes} />
                         </div>
-                        <div class="flex mt-8 mx-11 gap-4 mb-8">
+                        <div class="flex md:flex-row flex-col mt-8 md:mx-11 mx-5 gap-4 mb-8">
                             {
                                 article.nav.prev && (
                                     <a
-                                        class="flex items-center justify-end w-[50%] btn btn-outline py-6 h-fit px-4"
+                                        class="flex items-center justify-end md:w-[50%] btn btn-outline py-6 h-fit px-4"
                                         href={article.nav.prev.url}
                                     >
                                         <Icon
@@ -138,7 +179,7 @@ import { SEO } from "astro-seo";
                                             class="w-4 h-4 mr-auto"
                                         />
                                         <div class="text-right">
-                                            <div class="text-xs mb-2 font-semibold ">
+                                            <div class="text-xs mb-2 font-semibold hidden md:block">
                                                 Sebelumnya
                                             </div>
                                             <div class="font-titillium">
@@ -151,11 +192,11 @@ import { SEO } from "astro-seo";
                             {
                                 article.nav.next && (
                                     <a
-                                        class="flex items-center justify-start w-[50%] btn btn-outline py-6 h-fit px-4 ml-auto"
+                                        class="flex items-center justify-start md:w-[50%] w-full btn btn-outline py-6 h-fit px-4 ml-auto"
                                         href={article.nav.next.url}
                                     >
                                         <div class="text-left">
-                                            <div class="text-xs mb-2 font-semibold">
+                                            <div class="text-xs mb-2 font-semibold hidden md:block">
                                                 Selanjutnya
                                             </div>
                                             <div class="font-titillium">
@@ -173,6 +214,11 @@ import { SEO } from "astro-seo";
                     </main>
                     <TOC article={article} />
                 </div>
+            </div>
+            <div
+                class="drawer-side lg:sticky lg:top-[4rem] h-content mt-[7rem] lg:mt-0"
+            >
+                <SideMenus />
             </div>
         </div>
     </body>

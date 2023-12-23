@@ -6,24 +6,25 @@ import { Icon } from "astro-iconify";
 ---
 
 <header
-    class="sticky top-0 z-50 h-16 bg-base-100/80 backdrop-blur-xl flex px-5 items-center"
+    class="sticky top-0 z-50 h-16 bg-base-100 md:bg-opacity-80 md:backdrop-blur-xl flex px-5 items-center"
 >
     <a href="/">
         <Image
-        class="h-10 w-auto hidden dark:block"
-        src="/img/logo-dark.svg"
-        width="1300"
-        height="300"
-        alt="Logo"
+            class="h-10 w-auto hidden dark:block"
+            src="/img/logo-dark.svg"
+            width="1300"
+            height="300"
+            alt="Logo"
         />
         <Image
-        class="h-10 w-auto dark:hidden"
-        src="/img/logo-light.svg"
-        width="1300"
-        height="300"
-        alt="Logo"
+            class="h-10 w-auto dark:hidden"
+            src="/img/logo-light.svg"
+            width="1300"
+            height="300"
+            alt="Logo"
         />
     </a>
+    
     <!-- <div class="">
                 <OramaSearch client:load />
             </div> -->
@@ -52,11 +53,8 @@ import { Icon } from "astro-iconify";
             const themeSwitcher = document.querySelector("#themeSwitcher");
             const html = document.querySelector("html");
             themeSwitcher.addEventListener("change", (e) => {
-                localStorage.setItem(
-                    "theme",
-                    html.getAttribute("data-theme")
-                    );
-                });
+                localStorage.setItem("theme", html.getAttribute("data-theme"));
+            });
             // set the html theme to the saved theme on Astro page load
             document.addEventListener("astro:page-load", () => {
                 const theme = localStorage.getItem("theme");

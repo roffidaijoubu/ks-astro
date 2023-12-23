@@ -8,7 +8,7 @@ let {footnotes} = Astro.props;
             <ol>
                 {footnotes.map((footnote) => (
                     <li id={`${footnote.id}`}>
-                        <div set:html={footnote.content} />{" "}
+                        <span class="over break-words" set:html={footnote.content} />
                         <a
                             href={`#${footnote.id}-link`}
                             class="text-base-content/50"
