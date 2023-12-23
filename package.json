@@ -26,7 +26,6 @@
     "@types/react-dom": "^18.2.17",
     "astro": "^4.0.5",
     "astro-capo": "^0.0.1",
-    "astro-compress": "^2.2.5",
     "astro-critters": "^2.0.11",
     "astro-imagetools": "^0.9.0",
     "astro-robots-txt": "^1.0.0",

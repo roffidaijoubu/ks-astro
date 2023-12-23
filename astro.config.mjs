@@ -7,7 +7,7 @@ import svelte from "@astrojs/svelte";
 import { astroImageTools } from "astro-imagetools";
 import sitemap from "@astrojs/sitemap";
 import critters from "astro-critters";
-import compress from "astro-compress";
+// import compress from "astro-compress";
 
 import robotsTxt from "astro-robots-txt";
 
@@ -29,7 +29,5 @@ export default defineConfig({
       // index a page.
       contentSelectors: ['#main-content']
     }
-  }), react(), vue(), svelte(), sitemap(), astroImageTools, critters(), compress({
-    Image: false
-  }), robotsTxt()]
+  }), react(), vue(), svelte(), sitemap(), astroImageTools, critters(), robotsTxt()]
 });
