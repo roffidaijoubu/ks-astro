@@ -21,7 +21,7 @@ const json = await res.json();
 
 const article = json.find((article) => article.slug === slug);
 const title = article.title;
-const og_image = `https://api.vustadz.com/api/og/title=${encodeURIComponent(title)}/img=${Buffer.from(article.featured_image.url).toString('base64')}/logo=${Buffer.from("https://ucarecdn.com/70c79e80-7979-4da9-9fe6-f0a7f1c08ca3/logoicon.png").toString('base64')}`;
+
 import "../../styles.css";
 import "@fontsource/amiri";
 import "@fontsource-variable/lora";
@@ -75,7 +75,6 @@ import { SEO } from "astro-seo";
     <body>
         <ViewTransitions />
         <Navbar />
-        
         <div class="flex relative h-full">
             <SideMenus />
             <div class="w-full">
@@ -92,7 +91,7 @@ import { SEO } from "astro-seo";
                                             <div class="absolute h-full w-full inset-0 bg-gradient-to-t from-base-300 from-10% to-[90%] opacity-100" />
                                             <Image
                                                 class="object-cover w-full h-[400px] md:h-[600px]"
-                                                src={`${article.featured_image.url}/-/quality/smart/-/format/auto/`}
+                                                src={article.featured_image.url}
                                                 width={
                                                     article.featured_image.width
                                                 }
