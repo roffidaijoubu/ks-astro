@@ -31,8 +31,5 @@ export default defineConfig({
       // index a page.
       contentSelectors: ['#main-content']
     }
-  }), react(), vue(), svelte(), sitemap(), astroImageTools, robotsTxt(),
-  
-
-]
+  }), react(), vue(), svelte(), sitemap(), astroImageTools,  robotsTxt()]
 });
