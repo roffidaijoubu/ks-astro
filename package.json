@@ -20,7 +20,6 @@
     "@fontsource/amiri": "^5.0.8",
     "@fontsource/amiri-quran": "^5.0.12",
     "@fontsource/titillium-web": "^5.0.18",
-    "@img/sharp-win32-x64": "^0.33.1",
     "@orama/plugin-astro": "^2.0.0-beta.10",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
@@ -32,7 +31,6 @@
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sharp": "^0.33.1",
     "svelte": "^4.2.8",
     "tailwindcss": "^3.3.6",
     "vue": "^3.3.11"
