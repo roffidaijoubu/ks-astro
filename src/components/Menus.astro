@@ -9,8 +9,8 @@ const currentPath = pathname;
 ---
 
 <!-- loop through menus -->
-<nav class="sticky top-2 self-start font-titillium pt-5 md:w-96">
-    <ul class="menu flex flex-col gap-1">
+<nav class="h-screen self-start font-titillium  md:w-96 sticky top-0">
+    <ul class="menu flex flex-col gap-1 pt-5 pr-4 h-full overflow-y-scroll flex-nowrap hide-scrollbar">
         {
             menus.map((menu) => (
                 <li>
@@ -41,5 +41,6 @@ const currentPath = pathname;
                 </li>
             ))
         }
+        
     </ul>
 </nav>

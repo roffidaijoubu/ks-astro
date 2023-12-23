@@ -4,12 +4,16 @@ import orama from '@orama/plugin-astro';
 import react from "@astrojs/react";
 import vue from "@astrojs/vue";
 import svelte from "@astrojs/svelte";
-
+import { astroImageTools } from "astro-imagetools";
 import sitemap from "@astrojs/sitemap";
+import critters from "astro-critters";
+import compress from "astro-compress";
+
+import robotsTxt from "astro-robots-txt";
 
 // https://astro.build/config
 export default defineConfig({
-  site:'https://kenalisyiah.com',
+  site: 'https://kenalisyiah.com',
   image: {
     domains: ["ucarecdn.com"]
   },
@@ -25,5 +29,7 @@ export default defineConfig({
       // index a page.
       contentSelectors: ['#main-content']
     }
-  }), react(), vue(), svelte(), sitemap()]
+  }), react(), vue(), svelte(), sitemap(), astroImageTools, critters(), compress({
+    Image: false
+  }), robotsTxt()]
 });

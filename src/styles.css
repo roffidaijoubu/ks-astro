@@ -33,3 +33,14 @@
 .prose h2{
     @apply text-3xl font-bold mb-4 border-b-[1px] border-base-content/30 pb-3;
 }
+
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+
+*,
+.hide-scrollbar{
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
