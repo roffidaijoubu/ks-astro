@@ -47,7 +47,7 @@ import { SEO } from "astro-seo";
                 basic: {
                     title: title,
                     type: "article",
-                    image: og_image,
+                    image: article.featured_image.url,
                 },
                 optional:{
                     locale: "id_ID",
@@ -59,7 +59,7 @@ import { SEO } from "astro-seo";
                 site: "@kenalisyiah",
                 creator: "@kenalisyiah",
                 description: article.excerpt,
-                image: og_image,
+                image: article.featured_image.url,
             }}
         />
         <script>
