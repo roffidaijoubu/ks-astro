@@ -80,10 +80,12 @@ import { ThemeSwitch } from "astro-color-scheme";
             </div> -->
             <div class="ml-auto" transition:persist>
                 <ThemeSwitch strategy="checkbox">
-                    <label class="cursor-pointer grid place-items-center">
+                    <label for="themeSwitcher" class="cursor-pointer grid place-items-center">
                         <input
                             type="checkbox"
                             value="synthwave"
+                            name="themeSwitcher"
+                            id="themeSwitcher"
                             class="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
                         />
                         <svg
