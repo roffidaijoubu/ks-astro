@@ -2,26 +2,27 @@
 // TableOfContents.astro
 let { article } = Astro.props;
 ---
-
-<ul id="toc" class="menu sticky top-16 menu-sm self-start pt-5 md:w-96 flex-col gap-1 lg:flex hidden font-titillium ">
-    <li>
-        <h3 class="font-bold text-lg menu-title">Daftar Isi</h3>
-    </li>
-    {
-        article.toc.map((toc) => (
-            <li class="menu-item">
-                <a href={`${toc.url}`}>{toc.label}</a>
-            </li>
-        ))
-    }
-    {
-        article.footnotes && (
-            <li class="menu-item">
-                <a href="#footnotes">Catatan Kaki</a>
-            </li>
-        )
-    }
-</ul>
+{  article.toc && article.toc.length > 0 && article.footnotes.length > 0 && 
+    <ul id="toc" class="menu sticky top-16 menu-sm self-start pt-5 md:w-96 flex-col gap-1 lg:flex hidden font-titillium ">
+        <li>
+            <h3 class="font-bold text-lg menu-title">Daftar Isi</h3>
+        </li>
+        {
+            article.toc.map((toc) => (
+                <li class="menu-item">
+                    <a href={`${toc.url}`}>{toc.label}</a>
+                </li>
+            ))
+        }
+        {
+            article.footnotes && (
+                <li class="menu-item">
+                    <a href="#footnotes">Catatan Kaki</a>
+                </li>
+            )
+        }
+    </ul>
+}
 
 <script>
     document.addEventListener("astro:page-load", () => {

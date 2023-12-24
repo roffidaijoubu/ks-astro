@@ -1,36 +1,41 @@
-.prose :where(blockquote p:first-of-type):not( :where([class~="not-prose"], [class~="not-prose"] *))::before {
+.prose :where(.wp-block-pullquote blockquote p:first-of-type):not( :where([class~="not-prose"], [class~="not-prose"] *))::before {
     content: none !important;
 }
 
-.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)){
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     font-style: normal !important;
     /* font-size: 1.25rem !important; */
     /* font-family: 'Amiri', sans-serif !important; */
 
 }
 
-.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *))>cite{
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *))>cite {
     font-style: italic !important;
     font-weight: normal !important;
     font-size: .75rem !important;
 }
 
 /* last child of blockquite in prose */
-.prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *))>:nth-last-child(2){
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *))>:nth-last-child(2) {
     margin-bottom: 0 !important;
 }
 
-*{
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *))>cite{
+    margin-top: 18px !important;
+    display: inline-block !important;
+}
+
+* {
     scroll-behavior: smooth !important;
 }
 
-.wp-block-embed-youtube iframe{
+.wp-block-embed-youtube iframe {
     width: 100% !important;
     aspect-ratio: 16/9;
     height: auto !important;
 }
 
-.prose h2{
+.prose h2 {
     @apply text-3xl font-bold mb-4 border-b-[1px] border-base-content/30 pb-3;
 }
 
@@ -40,14 +45,76 @@
 }
 
 *,
-.hide-scrollbar{
+.hide-scrollbar {
     -ms-overflow-style: none !important;
     scrollbar-width: none !important;
 }
-.h-content{
+
+.h-content {
     height: calc(100vh - 4rem);
 }
-@media screen and (min-width: 768px){
-    
-    
+
+.wp-block-image{
+    @apply text-center flex flex-col items-center justify-center;
+}
+
+.has-vivid-green-cyan-color{
+    @apply text-success;
+}
+
+.has-vivid-red-color{
+    @apply text-error;
+}
+
+.prose blockquoute strong {
+    font-weight: bold !important;
+}
+
+.wp-block-pullquote blockquote {
+    border-left: none !important;
+    font-style: italic !important;
+    @apply py-4 w-fit mx-auto px-16 text-center text-2xl leading-normal relative mt-12;
+}
+
+.wp-block-pullquote blockquote:before,
+.wp-block-pullquote blockquote:after {
+    /* font-family: FontAwesome; */
+    font-style: normal !important;
+    position: absolute;
+    font-size: 80px;
+
+    @apply text-base-content/10 font-serif;
+}
+
+.wp-block-pullquote blockquote:before {
+    content: "\275D";
+    top: 0px;
+    left: 0px;
+}
+
+.wp-block-pullquote blockquote:after {
+    content: "\275E";
+    right: 0px;
+    top: auto;
+    bottom: -30px;
+}
+
+.wp-block-pullquote cite{
+    font-size: .9rem !important;
+    padding-top: 12px;
+}
+
+.fn>a{
+    text-decoration: none !important;
+    margin-left: 0.25rem !important;
+    margin-right: 0.05rem !important;
+}
+/* add [ and ] to .fn>a */
+.fn>a:before{
+    content: '[';
+
+}
+.fn>a:after{
+    content: ']';
+
 }

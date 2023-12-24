@@ -32,6 +32,22 @@ const currentPath = pathname;
                                             >
                                                 {child.title}
                                             </a>
+                                            <ul class="flex flex-col gap-1 pt-1">
+                                                {
+                                                    Array.isArray(child.children) && child.children.length > 0 && (
+                                                        child.children.map((subchild) => (
+                                                            <li>
+                                                                <a
+                                                                    class={currentPath.includes(subchild.url) ? "active" : ""}
+                                                                    href={subchild.url}
+                                                                >
+                                                                    {subchild.title}
+                                                                </a>
+                                                            </li>
+                                                        ))
+                                                    )
+                                                }
+                                            </ul>
                                         </li>
                                     ))
                                 }
