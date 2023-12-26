@@ -17,7 +17,9 @@ import purgecss from "astro-purgecss";
 export default defineConfig({
   site: 'https://kenalisyiah.com',
   image: {
-    domains: ["ucarecdn.com"]
+    domains: ["ucarecdn.com"],
+    service: squooshImageService(),
+
   },
   integrations: [tailwind(), orama({
     // We can generate more than one DB, with different configurations
