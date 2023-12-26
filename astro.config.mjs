@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, squooshImageService } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import orama from '@orama/plugin-astro';
 import react from "@astrojs/react";
@@ -18,7 +18,7 @@ export default defineConfig({
   site: 'https://kenalisyiah.com',
   image: {
     domains: ["ucarecdn.com"],
-    service: passthroughImageService(),
+    service: squooshImageService(),
 
   },
   integrations: [tailwind(), orama({
