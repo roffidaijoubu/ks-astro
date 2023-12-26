@@ -18,7 +18,7 @@ export default defineConfig({
   site: 'https://kenalisyiah.com',
   image: {
     domains: ["ucarecdn.com"],
-    service: squooshImageService(),
+    service: passthroughImageService(),
 
   },
   integrations: [tailwind(), orama({
