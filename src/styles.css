@@ -39,6 +39,14 @@
     @apply text-3xl font-bold mb-4 border-b-[1px] border-base-content/30 pb-3;
 }
 
+.prose h3 {
+    @apply text-xl font-bold mb-4;
+}
+
+.prose h4 {
+    @apply text-lg font-bold mb-4;
+}
+
 
 .hide-scrollbar::-webkit-scrollbar {
     display: none !important;

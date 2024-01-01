@@ -100,7 +100,8 @@ import { SEO } from "astro-seo";
                     Daftar Isi
                     <Icon name="solar:list-bold" class="w-6 h-6" />
                 </div>
-                <ul id="toc" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box flex flex-col gap-1">
+                {  ((article.toc && article.toc.length > 0) || (article.footnotes && article.footnotes.length > 0)) && 
+                <ul id="tocMobile" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box flex flex-col gap-1">
                     {
                         article.toc.map((toc) => (
                             <li class="max-w-[90vw] w-[300px]">
@@ -116,6 +117,7 @@ import { SEO } from "astro-seo";
                         )
                     }
                 </ul>
+                }
               </div>
         </div>
         <div class="drawer lg:drawer-open">
