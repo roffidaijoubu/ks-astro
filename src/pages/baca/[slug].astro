@@ -22,13 +22,13 @@ const json = await res.json();
 const article = json.find((article) => article.slug === slug);
 const title = article.title;
 const description = article.excerpt;
-const ogImg = `https://api.vustadz.com/api/og/title=${encodeURIComponent(
+const ogImg = article.featured_image ? `https://api.vustadz.com/api/og/title=${encodeURIComponent(
     title
 )}/img=${Buffer.from(article.featured_image.url).toString(
     "base64"
 )}/logo=${Buffer.from(
     "https://ucarecdn.com/70c79e80-7979-4da9-9fe6-f0a7f1c08ca3/logoicon.png"
-).toString("base64")}`;
+).toString("base64")}` : '';
 
 import "../../styles.css";
 import "@fontsource/amiri";
