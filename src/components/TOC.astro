@@ -11,6 +11,19 @@ let { article } = Astro.props;
             article.toc.map((toc) => (
                 <li class="menu-item">
                     <a href={`${toc.url}`}>{toc.label}</a>
+                    {
+                        toc.child && toc.child.length > 0 && (
+                            <ul class="submenu">
+                                {
+                                    toc.child.map((child) => (
+                                        <li class="menu-item">
+                                            <a href={`${child.url}`}>{child.label}</a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        )
+                    }
                 </li>
             ))
         }
