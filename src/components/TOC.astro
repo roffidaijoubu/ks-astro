@@ -2,28 +2,15 @@
 // TableOfContents.astro
 let { article } = Astro.props;
 ---
-{  article.toc && article.toc.length > 0 && article.footnotes && article.footnotes.length > 0 && 
+{  ((article.toc && article.toc.length > 0) || (article.footnotes && article.footnotes.length > 0)) && 
     <ul id="toc" class="menu sticky top-16 menu-sm self-start pt-5 md:w-96 flex-col gap-1 lg:flex hidden font-titillium ">
         <li>
             <h3 class="font-bold text-lg menu-title">Daftar Isi</h3>
         </li>
         {
             article.toc.map((toc) => (
-                <li class="menu-item">
+                <li class={`menu-item ${toc.tag}`} style={`margin-left: ${toc.tag === 'h2' ? '0px' : toc.tag === 'h3' ? '20px' : '40px'}`}>
                     <a href={`${toc.url}`}>{toc.label}</a>
-                    {
-                        toc.child && toc.child.length > 0 && (
-                            <ul class="submenu">
-                                {
-                                    toc.child.map((child) => (
-                                        <li class="menu-item">
-                                            <a href={`${child.url}`}>{child.label}</a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        )
-                    }
                 </li>
             ))
         }
@@ -41,6 +28,23 @@ let { article } = Astro.props;
     document.addEventListener("astro:page-load", () => {
         let activeEntries = 0;
 
+        const offset = 100; // Define your offset here
+
+        // Modify the click event on TOC links
+        document.querySelectorAll("#toc a, #tocMobile a").forEach((link) => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                const href = link.getAttribute("href");
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - offset,
+                        behavior: "smooth",
+                    });
+                }
+            });
+        });
+
         const setCurrentHeading: IntersectionObserverCallback = (entries) => {
             // loop to each entries (headings) in the page
             for (let entry of entries) {
@@ -48,7 +52,7 @@ let { article } = Astro.props;
                 const { id } = entry.target;
                 // get the TOC link's element for the current entry
                 const tocLinkEl = document.querySelector(
-                    `#toc a[href='#${id}']`
+                    `#toc a[href='#${id}'], #tocMobile a[href='#${id}']`
                 );
                 if (!tocLinkEl) return;
 
@@ -56,7 +60,7 @@ let { article } = Astro.props;
                     activeEntries++;
                     // remove active class from all links
                     document
-                        .querySelectorAll("#toc a")
+                        .querySelectorAll("#toc a, #tocMobile a")
                         .forEach((e) => e.classList.remove("active"));
                     // add active class to the currently active entry
                     tocLinkEl.classList.add("active");
@@ -68,7 +72,7 @@ let { article } = Astro.props;
             // If no entries are active, remove the active class from all links
             if (activeEntries === 0) {
                 document
-                    .querySelectorAll("#toc a")
+                    .querySelectorAll("#toc a, #tocMobile a")
                     .forEach((e) => e.classList.remove("active"));
             }
         };
