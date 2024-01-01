@@ -14,35 +14,53 @@ const currentPath = pathname;
         {
             menus.map((menu) => (
                 <li>
-                    <a
-                        class={currentPath.includes(menu.url) ? "active" : ""}
-                        href={menu.url}
-                    >
-                        {menu.title}
-                    </a>
+                    {menu.url ? 
+                        <a
+                            class={currentPath.includes(menu.url) ? "active" : ""}
+                            href={menu.url}
+                        >
+                            {menu.title}
+                        </a>
+                    :
+                        <span>
+                            {menu.title}
+                        </span>
+                    }
                     {
                         Array.isArray(menu.children) && menu.children.length > 0 && (
                             <ul class="submenu flex flex-col gap-1 pt-1">
                                 {
                                     menu.children.map((child) => (
                                         <li>
-                                            <a
-                                                class={currentPath.includes(child.url) ? "active" : ""}
-                                                href={child.url}
-                                            >
-                                                {child.title}
-                                            </a>
+                                            {child.url ? 
+                                                <a
+                                                    class={currentPath.includes(child.url) ? "active" : ""}
+                                                    href={child.url}
+                                                >
+                                                    {child.title}
+                                                </a>
+                                            :
+                                                <span>
+                                                    {child.title}
+                                                </span>
+                                            }
                                             <ul class="flex flex-col gap-1 pt-1">
                                                 {
                                                     Array.isArray(child.children) && child.children.length > 0 && (
                                                         child.children.map((subchild) => (
                                                             <li>
-                                                                <a
-                                                                    class={currentPath.includes(subchild.url) ? "active" : ""}
-                                                                    href={subchild.url}
-                                                                >
-                                                                    {subchild.title}
-                                                                </a>
+                                                                {subchild.url ? 
+                                                                    <a
+                                                                        class={currentPath.includes(subchild.url) ? "active" : ""}
+                                                                        href={subchild.url}
+                                                                    >
+                                                                        {subchild.title}
+                                                                    </a>
+                                                                :
+                                                                    <span>
+                                                                        {subchild.title}
+                                                                    </span>
+                                                                }
                                                             </li>
                                                         ))
                                                     )
