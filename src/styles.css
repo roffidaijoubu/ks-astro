@@ -112,6 +112,16 @@
     padding-top: 12px;
 }
 
+.has-text-align-right{
+    @apply text-right;
+}
+.has-text-align-center{
+    @apply text-center;
+}
+.has-text-align-left{
+    @apply text-left;
+}
+
 .fn>a{
     text-decoration: none !important;
     margin-left: 0.25rem !important;
