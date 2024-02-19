@@ -130,9 +130,30 @@
 /* add [ and ] to .fn>a */
 .fn>a:before{
     content: '[';
-
 }
 .fn>a:after{
     content: ']';
+}
+html.in-iframe .hide-in-iframe {
+    display: none;
+}
 
+html.in-iframe .container {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+.dataTables_filter{
+    @apply px-5 py-6 bg-base-100 border-b-[1px] border-base-content/30;
+    float: none !important;
+    text-align: left !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    margin-top: 0 !important;
+}
+.dataTables_filter input{
+    @apply w-full;
+}
+#dalil-table thead{
+    @apply sticky top-[109px] bg-base-100;
 }
