@@ -33,7 +33,6 @@
     "astro-purgecss": "^4.0.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
-    "astro-toast": "^1.1.4",
     "htmx.org": "^1.9.10",
     "node-fetch": "^3.3.2",
     "purgecss": "^5.0.0",
