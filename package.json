@@ -19,6 +19,7 @@
     "@fontsource-variable/montserrat": "^5.0.17",
     "@fontsource/amiri": "^5.0.8",
     "@fontsource/amiri-quran": "^5.0.12",
+    "@fontsource/lato": "^5.0.18",
     "@fontsource/titillium-web": "^5.0.18",
     "@orama/plugin-astro": "^2.0.0-beta.10",
     "@types/react": "^18.2.45",
@@ -32,6 +33,8 @@
     "astro-purgecss": "^4.0.0",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.0",
+    "astro-toast": "^1.1.4",
+    "htmx.org": "^1.9.10",
     "node-fetch": "^3.3.2",
     "purgecss": "^5.0.0",
     "react": "^18.2.0",
@@ -42,6 +45,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/jquery": "^3.5.29",
     "daisyui": "^4.4.20"
   }
 }
