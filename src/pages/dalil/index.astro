@@ -1,0 +1,85 @@
+---
+import "../../styles.css";
+import "@fontsource/amiri";
+import "@fontsource-variable/lora";
+import "@fontsource-variable/montserrat";
+import "@fontsource/titillium-web";
+
+const API_URL = "https://ks.valocg.xyz/wp-json/api/dalil";
+// FETCH DATA
+const res = await fetch(API_URL);
+const data = await res.json();
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dalils</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"
+        />
+        <script
+            type="text/javascript"
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script
+            type="text/javascript"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"
+        ></script>
+    </head>
+    <body>
+        <main class="pt-5 px-5">
+            <table class="display" id="dalil-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Kitab</th>
+                        <th>Grading</th>
+                        <th>Author</th>
+                        <th>Tags</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data.map((dalil) => {
+                            return (
+                                <tr>
+                                    <td>{dalil.id}</td>
+                                    <td>{dalil.title}</td>
+                                    <td>{dalil.kitab}</td>
+                                    <td>
+                                        {dalil.grading && (
+                                            <span class="badge rounded-full bg-success text-white px-3 py-4">
+                                                {dalil.grading}
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td>{dalil.author}</td>
+                                    <td>{dalil.tags}</td>
+                                    <td>
+                                        <a
+                                            href={`/dalil/${dalil.id}`}
+                                            class="btn btn-outline btn-xs"
+                                        >
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                            );
+                        })
+                    }
+                </tbody>
+            </table>
+        </main>
+        <script>
+            $(document).ready(function () {
+                $("#dalil-table").DataTable();
+            });
+        </script>
+    </body>
+</html>

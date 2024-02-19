@@ -1,0 +1,89 @@
+---
+// Import necessary packages
+import "../../styles.css";
+import "@fontsource/amiri";
+import "@fontsource-variable/lora";
+import "@fontsource-variable/montserrat";
+import "@fontsource/titillium-web";
+import "@fontsource/lato";
+import fetchDalils from "../../scripts/fetchDalils";
+import Copyable from "../../components/Copyable.astro";
+
+
+
+export async function getStaticPaths() {
+    const dalils = await fetchDalils();
+    return dalils.map((dalil) => {
+        return { params: { id: dalil.id } };
+    });
+}
+
+const API_URL = 'https://ks.valocg.xyz/wp-json/api/dalil';
+
+const { id } = Astro.params;
+const res = await fetch(API_URL);
+const json = await res.json();
+
+const dalil = json.find((dalil) => dalil.id == id);
+
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{dalil.title}</title>
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+    <id id="toasterContainer"></id>
+    <main class="container mx-auto px-5">
+        <div class="flex flex-wrap gap-2 items-center py-4 border-b-2">
+            <a href="/dalil" class="btn btn-outline btn-xs w-fit">Back to Dalils</a>
+            <h1 class="text-lg">{dalil.title}</h1>
+            <div class="flex gap-1">
+                {
+                    dalil.tag.map((tag) => {
+                        return <span class="badge badge-sm badge-neutral px-3 py-4">{tag}</span>;
+                    })
+                }
+            </div>
+        </div>
+        <article class="grid md:grid-cols-2 gap-3 mt-4">
+            <div class=" md:order-2">
+                <img src=`${dalil.img}` alt=`${dalil.title}` />
+            </div>
+            <div class="flex flex-col gap-2">
+                
+                {dalil.grading && <p><strong>Grading:</strong> <span class="badge rounded-full bg-success text-white px-3 py-4">{dalil.grading}</span></p>}
+                <p><strong>Kitab:</strong> {dalil.kitab}</p>
+                <p><strong>Author:</strong> {dalil.author}</p>
+                <p><strong>Volume:</strong> {dalil.volume}</p>
+                <p><strong>Page:</strong> {dalil.page}</p>
+                <strong>Reference:</strong>
+                <Copyable class="text-sm italic">{dalil.reference}</Copyable>
+                
+            </div>
+            
+        </article>
+        <article class="mt-4 mb-6">
+            <div class="py-3 md:grid-cols-2 grid gap-5">
+                <div class="col-span-2">
+                    <Copyable class="text-right font-amiri text-xl leading-loose">{dalil.text_ar}</Copyable>
+                </div>
+                <div class="md:col-span-1 col-span-2">
+                    <Copyable>{dalil.text_id}</Copyable>
+                </div>
+                <div class="md:col-span-1 col-span-2">
+                    <Copyable>
+                        {dalil.text_en}
+                    </Copyable>
+                </div>
+                
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
