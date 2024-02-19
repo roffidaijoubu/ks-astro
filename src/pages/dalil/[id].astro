@@ -9,8 +9,6 @@ import "@fontsource/lato";
 import fetchDalils from "../../scripts/fetchDalils";
 import Copyable from "../../components/Copyable.astro";
 
-
-
 export async function getStaticPaths() {
     const dalils = await fetchDalils();
     return dalils.map((dalil) => {
@@ -18,80 +16,112 @@ export async function getStaticPaths() {
     });
 }
 
-const API_URL = 'https://ks.valocg.xyz/wp-json/api/dalil';
+const API_URL = "https://ks.valocg.xyz/wp-json/api/dalil";
 
 const { id } = Astro.params;
 const res = await fetch(API_URL);
 const json = await res.json();
 
 const dalil = json.find((dalil) => dalil.id == id);
-
 ---
 
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{dalil.title}</title>
-    <link rel="stylesheet" href="/styles.css" />
-    <script>
-        if (window.self !== window.top) {
-            document.documentElement.classList.add('in-iframe');
-        }
-    </script>
-</head>
-<body>
-    <main class="container mx-auto px-5">
-        <div id="header" class="flex flex-wrap gap-2 items-center py-4 border-b-2">
-            <a href="/dalil" class="hide-in-iframe btn btn-outline btn-xs w-fit">Back to Dalils</a>
-            <h1 class="text-lg">{dalil.title}</h1>
-            <div class="flex gap-1">
-                {
-                    dalil.tag.map((tag) => {
-                        return <span class="badge badge-sm badge-neutral px-3 py-4">{tag}</span>;
-                    })
-                }
-            </div>
-        </div>
-        <article class="grid md:grid-cols-2 grid-cols-1 gap-3 mt-4">
-            <div class=" md:order-2">
-                {dalil.source_url && (
-                        <strong>Source URL:</strong>
-                        <Copyable class="text-sm italic">{dalil.source_url}</Copyable>
-                )}
-                <img src=`${dalil.img}` alt=`${dalil.title}` class="mt-3 w-full"/>
-            </div>
-            <div class="flex flex-col gap-2">
-                
-                {dalil.grading && <p><strong>Grading:</strong> <span class="badge rounded-full bg-success text-white px-3 py-4">{dalil.grading}</span></p>}
-                <p><strong>Kitab:</strong> {dalil.kitab}</p>
-                <p><strong>Author:</strong> {dalil.author}</p>
-                <p><strong>Volume:</strong> {dalil.volume}</p>
-                <p><strong>Page:</strong> {dalil.page}</p>
-                <strong>Reference:</strong>
-                <Copyable class="text-sm italic">{dalil.reference}</Copyable>
-                
-            </div>
-            
-        </article>
-        <article class="mt-4 mb-6">
-            <div class="py-3 md:grid-cols-2 grid gap-5">
-                <div class="col-span-2">
-                    <Copyable class="text-right font-amiri text-xl leading-loose">{dalil.text_ar}</Copyable>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{dalil.title}</title>
+        <link rel="stylesheet" href="/styles.css" />
+        <script>
+            if (window.self !== window.top) {
+                document.documentElement.classList.add("in-iframe");
+            }
+        </script>
+    </head>
+    <body>
+        <main class="container mx-auto px-5">
+            <div
+                id="header"
+                class="flex flex-wrap gap-2 items-center py-4 border-b-2"
+            >
+                <a
+                    href="/dalil"
+                    class="hide-in-iframe btn btn-outline btn-xs w-fit"
+                    >Back to Dalils</a
+                >
+                <h1 class="text-lg">{dalil.title}</h1>
+                <div class="flex gap-1">
+                    {
+                        dalil.tag.map((tag) => {
+                            return (
+                                <span class="badge badge-sm badge-neutral px-3 py-4">
+                                    {tag}
+                                </span>
+                            );
+                        })
+                    }
                 </div>
-                <div class="md:col-span-1 col-span-2">
-                    <Copyable>{dalil.text_id}</Copyable>
+            </div>
+            <article class="grid md:grid-cols-2 grid-cols-1 gap-3 mt-4">
+                <div class="md:order-2">
+                    <img
+                        src=`${dalil.img}`
+                        alt=`${dalil.title}`
+                        class="mt-3 w-full"
+                    />
                 </div>
-                <div class="md:col-span-1 col-span-2">
-                    <Copyable>
-                        {dalil.text_en}
+                <div class="flex flex-col gap-2">
+                    {
+                        dalil.grading && (
+                            <p>
+                                <strong>Grading:</strong>{" "}
+                                <span class="badge rounded-full bg-success text-white px-3 py-4">
+                                    {dalil.grading}
+                                </span>
+                            </p>
+                        )
+                    }
+                    <p><strong>Kitab:</strong> {dalil.kitab}</p>
+                    <p><strong>Author:</strong> {dalil.author}</p>
+                    <p><strong>Volume:</strong> {dalil.volume}</p>
+                    <p><strong>Page:</strong> {dalil.page}</p>
+                    <strong>Reference:</strong>
+                    <Copyable class="text-sm italic">
+                        {dalil.reference}
                     </Copyable>
+                    {
+                        dalil.source_url && (
+                            <>
+                                <strong>Source URL:</strong>
+                                <Copyable class="text-sm font-mono overflow-x-scroll">
+                                    {dalil.source_url}
+                                </Copyable>
+                            </>
+                        )
+                    }
                 </div>
-                
-
-            </div>
-        </article>
-    </main>
-</body>
+            </article>
+            <article class="mt-4 mb-6">
+                <div class="py-3 md:grid-cols-2 grid gap-5">
+                    <div class="col-span-2">
+                        <Copyable
+                            class="text-right font-amiri text-xl leading-loose prose w-full max-w-none"
+                        >
+                            <div set:html={dalil.text_ar} />
+                        </Copyable>
+                    </div>
+                    <div class="md:col-span-1 col-span-2">
+                        <Copyable class="prose w-full max-w-none">
+                            <div set:html={dalil.text_id} />
+                        </Copyable>
+                    </div>
+                    <div class="md:col-span-1 col-span-2">
+                        <Copyable class="prose w-full max-w-none">
+                            <div set:html={dalil.text_en} />
+                        </Copyable>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </body>
 </html>
