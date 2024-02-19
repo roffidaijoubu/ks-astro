@@ -30,17 +30,18 @@ const data = await res.json();
             src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"
         ></script>
     </head>
-    <body>
-        <main class="pt-5 px-5">
-            <table class="display" id="dalil-table">
+
+    <body class="">
+        <main class="">
+            <table class="display text-sm md:" id="dalil-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th class="hidden md:table-cell">ID</th>
                         <th>Title</th>
-                        <th>Kitab</th>
-                        <th>Grading</th>
-                        <th>Author</th>
-                        <th>Tags</th>
+                        <th class="hidden md:table-cell">Kitab</th>
+                        <th class="hidden md:table-cell">Grading</th>
+                        <th class="hidden md:table-cell">Author</th>
+                        <th class="hidden md:table-cell">Tags</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -49,25 +50,60 @@ const data = await res.json();
                         data.map((dalil) => {
                             return (
                                 <tr>
-                                    <td>{dalil.id}</td>
+                                    <td class="hidden md:table-cell">
+                                        {dalil.id}
+                                    </td>
                                     <td>{dalil.title}</td>
-                                    <td>{dalil.kitab}</td>
-                                    <td>
+                                    <td class="hidden md:table-cell">
+                                        {dalil.kitab}
+                                    </td>
+                                    <td class="hidden md:table-cell">
                                         {dalil.grading && (
                                             <span class="badge rounded-full bg-success text-white px-3 py-4">
                                                 {dalil.grading}
                                             </span>
                                         )}
                                     </td>
-                                    <td>{dalil.author}</td>
-                                    <td>{dalil.tags}</td>
+                                    <td class="hidden md:table-cell">
+                                        {dalil.author}
+                                    </td>
+                                    <td class="hidden md:table-cell">
+                                        {dalil.tags}
+                                    </td>
                                     <td>
-                                        <a
-                                            href={`/dalil/${dalil.id}`}
-                                            class="btn btn-outline btn-xs"
-                                        >
-                                            View
-                                        </a>
+                                        <div class="flex items-center gap-2">
+                                            <label
+                                                for="viewModal"
+                                                class="btn btn-outline btn-sm btn-modal hidden md:inline-flex"
+                                                data-id={dalil.id}
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    class="w-6 h-6"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                                    />
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                                    />
+                                                </svg>
+                                            </label>
+                                            <a
+                                                href={`/dalil/${dalil.id}`}
+                                                class="btn btn-outline btn-sm"
+                                            >
+                                                View
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             );
@@ -78,8 +114,39 @@ const data = await res.json();
         </main>
         <script>
             $(document).ready(function () {
-                $("#dalil-table").DataTable();
+                new DataTable("#dalil-table", {
+                    paging: false,
+                    responsive: true,
+                    info: false,
+                    rowReorder: {
+                        selector: "td:nth-child(2)",
+                    },
+                });
+                $(".btn-modal").click(function () {
+                    let dalil_id = $(this).data("id");
+                    //delete previous iframe
+                    $("#dalilModal iframe").remove();
+                    //append new iframe
+                    $("#dalilModal .modal-box").append(
+                        `<iframe src="/dalil/${dalil_id}" frameborder="0" class="w-full h-full"></iframe>`
+                    );
+                });
             });
         </script>
+
+        <!-- Put this part before </body> tag -->
+        <input type="checkbox" id="viewModal" class="modal-toggle" />
+        <div class="modal" id="dalilModal" role="dialog">
+            <div class="modal-box w-[80vw] h-[80vh] max-w-[1400px] max-h-none">
+                <label
+                    for="viewModal"
+                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                    >✕</label
+                >
+                <iframe src="/dalil/615" frameborder="0" class="w-full h-full"
+                ></iframe>
+            </div>
+            <label class="modal-backdrop" for="viewModal">Close</label>
+        </div>
     </body>
 </html>
