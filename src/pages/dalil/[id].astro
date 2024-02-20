@@ -8,6 +8,8 @@ import "@fontsource/titillium-web";
 import "@fontsource/lato";
 import fetchDalils from "../../scripts/fetchDalils";
 import Copyable from "../../components/Copyable.astro";
+import { SEO } from "astro-seo";
+
 
 export async function getStaticPaths() {
     const dalils = await fetchDalils();
@@ -31,6 +33,31 @@ const dalil = json.find((dalil) => dalil.id == id);
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{dalil.title}</title>
+        <SEO
+            title={dalil.title}
+            titleTemplate="%s | KenaliSyiah"
+            description={dalil.text_en}
+            openGraph={{
+                basic: {
+                    title: dalil.title,
+                    type: "article",
+                    image: dalil.img,
+                },
+                optional: {
+                    locale: "id_ID",
+                    siteName: "KenaliSyiah",
+                    description: dalil.text_en,
+                },
+            }}
+            twitter={{
+                title: dalil.title,
+                card: "summary_large_image",
+                site: "@kenalisyiah",
+                creator: "@kenalisyiah",
+                description: dalil.text_en,
+                image: dalil.img,
+            }}
+        />
         <link rel="stylesheet" href="/styles.css" />
         <script>
             if (window.self !== window.top) {
