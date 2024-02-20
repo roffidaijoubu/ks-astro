@@ -25,7 +25,7 @@ const res = await fetch(API_URL);
 const json = await res.json();
 
 const dalil = json.find((dalil) => dalil.id == id);
-const ogDescription = decodeURIComponent(dalil.text_en.replace(/<[^>]*>?/gm, ""));
+const ogDescription = encodeURIComponent(dalil.text_en.replace(/<[^>]*>?/gm, ""));
 ---
 
 <!DOCTYPE html>
