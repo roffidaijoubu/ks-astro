@@ -25,6 +25,7 @@ const res = await fetch(API_URL);
 const json = await res.json();
 
 const dalil = json.find((dalil) => dalil.id == id);
+const ogDescription = dalil.text_en.replace(/<[^>]*>?/gm, "").slice(0, 200);
 ---
 
 <!DOCTYPE html>
@@ -36,7 +37,7 @@ const dalil = json.find((dalil) => dalil.id == id);
         <SEO
             title={dalil.title}
             titleTemplate="%s | KenaliSyiah"
-            description={dalil.text_en}
+            description={ogDescription}
             openGraph={{
                 basic: {
                     title: dalil.title,
@@ -46,7 +47,7 @@ const dalil = json.find((dalil) => dalil.id == id);
                 optional: {
                     locale: "id_ID",
                     siteName: "KenaliSyiah",
-                    description: dalil.text_en,
+                    description: ogDescription,
                 },
             }}
             twitter={{
@@ -54,7 +55,7 @@ const dalil = json.find((dalil) => dalil.id == id);
                 card: "summary_large_image",
                 site: "@kenalisyiah",
                 creator: "@kenalisyiah",
-                description: dalil.text_en,
+                description: ogDescription,
                 image: dalil.img,
             }}
         />
