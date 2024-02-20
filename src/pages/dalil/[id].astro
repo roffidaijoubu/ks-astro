@@ -9,10 +9,8 @@ import "@fontsource/lato";
 import fetchDalils from "../../scripts/fetchDalils";
 import Copyable from "../../components/Copyable.astro";
 import { SEO } from "astro-seo";
-import pkg from 'he';
-const {decode} = pkg;
-
-
+import pkg from "he";
+const { decode } = pkg;
 
 export async function getStaticPaths() {
     const dalils = await fetchDalils();
@@ -92,6 +90,17 @@ const ogDescription = decode(dalil.text_en.replace(/<[^>]*>?/gm, ""));
                         })
                     }
                 </div>
+                <a
+                    href={`https://ks.valocg.xyz/wp-admin/post.php?post=${dalil.id}&action=edit`}
+                    target="_blank"
+                    class="btn btn-ghost btn-sm ml-auto"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                    <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
+                    </svg>
+
+
+                </a>
             </div>
             <article class="grid md:grid-cols-2 grid-cols-1 gap-3 mt-4">
                 <div class="md:order-2">
@@ -124,9 +133,41 @@ const ogDescription = decode(dalil.text_en.replace(/<[^>]*>?/gm, ""));
                         dalil.source_url && (
                             <>
                                 <strong>Source URL:</strong>
-                                <Copyable class="text-sm font-mono overflow-x-scroll">
-                                    {dalil.source_url}
-                                </Copyable>
+                                <div class="flex gap-2 items-center">
+                                    <span id="qrcode"></span>
+                                    <Copyable class="text-sm font-mono overflow-x-scroll" parentClass="w-10/12">
+                                        {dalil.source_url}
+                                    </Copyable>
+                                </div>
+                                <script
+                                    is:inline
+                                    src="/public/js/easy.qrcode.min.js"
+                                />
+                                <script define:vars={{ dalil }}>
+                                        // Options
+                                        var options = {
+                                            text: dalil.source_url,
+                                            drawer: 'canvas',
+                                            width: 100,
+                                            height: 100,
+                                        
+                                        };
+                                        
+                                        // Create QRCode Object
+                                        new QRCode(document.getElementById("qrcode"), options);
+                                </script>
+                            </>
+                        )
+                    }
+                    {
+                        dalil.youtube_url && (
+                            <>
+                                <strong>Other URL:</strong>
+                                <div class="flex gap-2 items-center">
+                                    <Copyable class="text-sm font-mono overflow-x-scroll" parentClass="w-10/12">
+                                        {dalil.youtube_url}
+                                    </Copyable>
+                                </div>
                             </>
                         )
                     }
