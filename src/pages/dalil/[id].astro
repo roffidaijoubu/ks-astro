@@ -9,6 +9,9 @@ import "@fontsource/lato";
 import fetchDalils from "../../scripts/fetchDalils";
 import Copyable from "../../components/Copyable.astro";
 import { SEO } from "astro-seo";
+import pkg from 'he';
+const {decode} = pkg;
+
 
 
 export async function getStaticPaths() {
@@ -25,7 +28,7 @@ const res = await fetch(API_URL);
 const json = await res.json();
 
 const dalil = json.find((dalil) => dalil.id == id);
-const ogDescription = encodeURIComponent(dalil.text_en.replace(/<[^>]*>?/gm, ""));
+const ogDescription = decode(dalil.text_en.replace(/<[^>]*>?/gm, ""));
 ---
 
 <!DOCTYPE html>
