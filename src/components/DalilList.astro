@@ -10,9 +10,9 @@ let { data: data } = Astro.props;
         </div>
 
         <!-- Child elements of container with class="list" becomes list items -->
-        <div class="grid grid-cols-12 text-sm font-semibold py-2 px-4">
+        <div class="grid grid-cols-12 text-sm font-semibold py-4 bg-base-200 px-4">
             <div
-                class="col-span-8 flex justify-between items-center sort cursor-pointer"
+                class="col-span-12 flex justify-between items-center sort cursor-pointer"
                 data-sort="title"
             >
                 Title
@@ -106,7 +106,7 @@ let { data: data } = Astro.props;
                             <div class="collapse-content bg-base-200">
                                 <div class="grid grid-cols-2 gap-2 p-4">
                                     <div class="col-span-2">
-                                        <div class="flex gap-2 py-2">
+                                        <div class="flex gap-2 py-2 tag">
                                             {dalil.tag
                                                 .sort(
                                                     (a, b) =>
@@ -114,12 +114,7 @@ let { data: data } = Astro.props;
                                                 )
                                                 .map((tag) => {
                                                     return (
-                                                        <span
-                                                            class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer"
-                                                            data-tag={tag}
-                                                        >
-                                                            {tag}
-                                                        </span>
+                                                        <span class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer whitespace-nowrap" data-tag={tag}>{tag}</span>
                                                     );
                                                 })}
                                         </div>
@@ -144,15 +139,24 @@ let { data: data } = Astro.props;
                                         <div class="font-bold">Page</div>
                                         <span class="page">{dalil.page}</span>
                                     </div>
+                                    {
+                                        dalil.grading &&(
+                                        <div class="text-sm col-span-1">
+                                            <div class="font-bold">Grading</div>
+                                            <span class="page badge badge-success">{dalil.grading}</span>
+                                        </div>
+                                        )
+                                    }
+                                    
                                     <div
-                                        class="prose text_id  text-sm col-span-2 mt-4"
+                                        class="prose text_id  text-sm col-span-2 mt-2 pt-2 border-t-[2px]"
                                         set:html={dalil.text_id.replace(
                                             /<p><\/p>|<p>&nbsp;<\/p>/g,
                                             "",
                                         )}
                                     />
                                     <div
-                                        class="prose text_en  text-sm col-span-2"
+                                        class="prose text_en  text-sm col-span-2  mt-2 pt-2 border-t-[2px]"
                                         set:html={dalil.text_en.replace(
                                             /<p><\/p>|<p>&nbsp;<\/p>/g,
                                             "",
@@ -172,7 +176,7 @@ let { data: data } = Astro.props;
     src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script>
     var options = {
-        valueNames: ["title", "text_id", "text_en", "kitab"],
+        valueNames: ["title", "text_id", "text_en", "kitab", "author", "volume", "page", "tag"],
     };
 
     var userList = new List("dalil-list", options);
