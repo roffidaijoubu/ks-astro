@@ -1,0 +1,145 @@
+---
+let {data:data} = Astro.props; 
+---
+<table class="display text-sm md:" id="dalil-table">
+    <thead>
+        <tr>
+            <th class="hidden md:table-cell">ID</th>
+            <th>Title</th>
+            <th class="hidden md:table-cell">Kitab</th>
+            <th class="hidden md:table-cell">Grading</th>
+            <th class="hidden md:table-cell">Author</th>
+            <th class="hidden md:table-cell">Tags</th>
+            <th class="hidden">Text Arab</th>
+            <th class="hidden">Text English</th>
+            <th class="hidden">Text Indonesia</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {
+            data.map((dalil) => {
+                return (
+                    <tr class="group">
+                        <td class="hidden md:table-cell">
+                            {dalil.id}
+                        </td>
+                        <td>{dalil.title}</td>
+                        <td class="hidden md:table-cell">
+                            {dalil.kitab}
+                        </td>
+                        <td class="hidden md:table-cell">
+                            {dalil.grading && (
+                                <span class="cursor-pointer badge badge-xs rounded-full bg-success text-white px-3 py-4" data-grading={dalil.grading} >
+                                    {dalil.grading}
+                                </span>
+                            )}
+                        </td>
+                        <td class="hidden md:table-cell">
+                            {dalil.author}
+                        </td>
+                        <td class="hidden md:table-cell">
+                            {dalil.tag.sort((a, b) => b.length - a.length).map((tag) => {
+                                return (
+                                    <span class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer" data-tag={tag}>
+                                        {tag}
+                                    </span>
+                                );
+                            })}
+                        </td>
+                        <td class="hidden">{dalil.text_ar}</td>
+                        <td class="hidden">{dalil.text_en}</td>
+                        <td class="hidden">{dalil.text_id}</td>
+                        <td>
+                            <div class="flex items-center gap-2">
+                                <label
+                                    for="viewModal"
+                                    class="btn md:opacity-0 group-hover:opacity-100 btn-ghost btn-sm btn-modal hidden md:inline-flex"
+                                    data-id={dalil.id}
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                <path fill-rule="evenodd" d="M10.75 6h-2v4.25a.75.75 0 0 1-1.5 0V6h1.5V3.704l.943 1.048a.75.75 0 0 0 1.114-1.004l-2.25-2.5a.75.75 0 0 0-1.114 0l-2.25 2.5a.75.75 0 0 0 1.114 1.004l.943-1.048V6h-2A2.25 2.25 0 0 0 3 8.25v4.5A2.25 2.25 0 0 0 5.25 15h5.5A2.25 2.25 0 0 0 13 12.75v-4.5A2.25 2.25 0 0 0 10.75 6ZM7 16.75v-.25h3.75a3.75 3.75 0 0 0 3.75-3.75V10h.25A2.25 2.25 0 0 1 17 12.25v4.5A2.25 2.25 0 0 1 14.75 19h-5.5A2.25 2.25 0 0 1 7 16.75Z" clip-rule="evenodd" />
+                                </svg>
+
+
+                                </label>
+                                <a
+                                href={`/dalil/${dalil.id}`}
+                                class="btn md:opacity-0 group-hover:opacity-100 btn-ghost btn-sm"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
+                                </svg>
+
+                                </a>
+                                <a
+                                    href={`https://ks.valocg.xyz/wp-admin/post.php?post=${dalil.id}&action=edit`}
+                                    target="_blank"
+                                    class="btn md:opacity-0 group-hover:opacity-100 btn-ghost btn-sm"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
+                                </svg>
+
+
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                );
+            })
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        new DataTable("#dalil-table", {
+            paging: false,
+            responsive: true,
+            info: false,
+            rowReorder: {
+                selector: "td:nth-child(2)",
+            },
+        });
+        $(".btn-modal").click(function () {
+            let dalil_id = $(this).data("id");
+            //delete previous iframe
+            $("#dalilModal iframe").remove();
+            //append new iframe
+            $("#dalilModal .modal-box").append(
+                `<iframe src="/dalil/${dalil_id}" frameborder="0" class="w-full h-full"></iframe>`
+            );
+        });
+        // add event listener when data-tag is clicked
+        $("[data-tag], [data-grading]").click(function () {
+            let $searchinput = $("#dalil-table_filter input");
+            let currentVal = $searchinput.val();
+            let tag = $(this).data("tag") || $(this).data("grading");
+            // if currentVal is the same as the tag, then remove the tag from the search input
+            if (currentVal == tag) {
+                $searchinput.val("");
+                $searchinput.trigger("keyup");
+                return;
+            }
+            // populate the search input with the tag
+            $searchinput.val(tag);
+            // trigger the search event
+            $searchinput.trigger("keyup");
+        });
+        // add event listener when $searchinput is changed
+        $("#dalil-table_filter input").on("keyup", function () {
+            let $searchinput = $(this);
+            let currentVal = $searchinput.val();
+            // if the search input is empty, then remove the tag from the search input
+            if (currentVal == "") {
+                $("[data-tag]").removeClass("badge-primary").addClass("badge-outline");
+                return;
+            }
+            // if the search input is not empty, then add the tag from the search input
+            $("[data-tag]").removeClass("badge-primary").addClass("badge-outline");
+            $(`[data-tag="` + currentVal + `"]`).addClass("badge-primary").removeClass("badge-outline");
+        });
+    });
+</script>
