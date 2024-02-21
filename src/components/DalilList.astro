@@ -1,0 +1,179 @@
+---
+let { data: data } = Astro.props;
+---
+
+<div id="dalil-list">
+    <header class="sticky top-0 bg-base-100 z-50">
+        <!-- class="search" automagically makes an input a search field. -->
+        <div class="p-5">
+            <input class="search input input-bordered w-full" placeholder="Search" />
+        </div>
+
+        <!-- Child elements of container with class="list" becomes list items -->
+        <div class="grid grid-cols-12 text-sm font-semibold py-2 px-4">
+            <div
+                class="col-span-8 flex justify-between items-center sort cursor-pointer"
+                data-sort="title"
+            >
+                Title
+                <span
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="w-5 h-5"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M10.53 3.47a.75.75 0 0 0-1.06 0L6.22 6.72a.75.75 0 0 0 1.06 1.06L10 5.06l2.72 2.72a.75.75 0 1 0 1.06-1.06l-3.25-3.25Zm-4.31 9.81 3.25 3.25a.75.75 0 0 0 1.06 0l3.25-3.25a.75.75 0 1 0-1.06-1.06L10 14.94l-2.72-2.72a.75.75 0 0 0-1.06 1.06Z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <ul class="list">
+        {
+            data.map((dalil, index) => {
+                return (
+                    <li class="text-sm group">
+                        <div class="collapse collapse-arrow rounded-none relative">
+                            <input
+                                type="checkbox"
+                                name="accordion"
+                                class="z-10"
+                            />
+                            <div class="collapse-title">
+                                <div class="grid grid-cols-12">
+                                    <div class="col-span-8 title">
+                                        {dalil.title}
+                                    </div>
+                                    <div class="col-span-4 z-30 flex justify-end">
+                                        <label
+                                            for="viewModal"
+                                            class="btn md:opacity-10 group-hover:opacity-100 btn-ghost btn-sm btn-modal hidden md:inline-flex"
+                                            data-id={dalil.id}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                class="w-5 h-5"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M10.75 6h-2v4.25a.75.75 0 0 1-1.5 0V6h1.5V3.704l.943 1.048a.75.75 0 0 0 1.114-1.004l-2.25-2.5a.75.75 0 0 0-1.114 0l-2.25 2.5a.75.75 0 0 0 1.114 1.004l.943-1.048V6h-2A2.25 2.25 0 0 0 3 8.25v4.5A2.25 2.25 0 0 0 5.25 15h5.5A2.25 2.25 0 0 0 13 12.75v-4.5A2.25 2.25 0 0 0 10.75 6ZM7 16.75v-.25h3.75a3.75 3.75 0 0 0 3.75-3.75V10h.25A2.25 2.25 0 0 1 17 12.25v4.5A2.25 2.25 0 0 1 14.75 19h-5.5A2.25 2.25 0 0 1 7 16.75Z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </label>
+                                        <a
+                                            href={`/dalil/${dalil.id}`}
+                                            class="btn md:opacity-10 group-hover:opacity-100 btn-ghost btn-sm"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                class="w-5 h-5"
+                                            >
+                                                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </a>
+                                        <a
+                                            href={`https://ks.valocg.xyz/wp-admin/post.php?post=${dalil.id}&action=edit`}
+                                            target="_blank"
+                                            class="btn md:opacity-10 group-hover:opacity-100 btn-ghost btn-sm"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                class="w-5 h-5"
+                                            >
+                                                <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collapse-content bg-base-200">
+                                <div class="grid grid-cols-2 gap-2 p-4">
+                                    <div class="col-span-2">
+                                        <div class="flex gap-2 py-2">
+                                            {dalil.tag
+                                                .sort(
+                                                    (a, b) =>
+                                                        b.length - a.length,
+                                                )
+                                                .map((tag) => {
+                                                    return (
+                                                        <span
+                                                            class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer"
+                                                            data-tag={tag}
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    );
+                                                })}
+                                        </div>
+                                    </div>
+                                    <div class="text-sm col-span-1">
+                                        <div class="font-bold">Kitab</div>
+                                        <span class="kitab">{dalil.kitab}</span>
+                                    </div>
+                                    <div class="text-sm col-span-1">
+                                        <div class="font-bold">Author</div>
+                                        <span class="author">
+                                            {dalil.author}
+                                        </span>
+                                    </div>
+                                    <div class="text-sm col-span-1">
+                                        <div class="font-bold">Vol.</div>
+                                        <span class="volume">
+                                            {dalil.volume}
+                                        </span>
+                                    </div>
+                                    <div class="text-sm col-span-1">
+                                        <div class="font-bold">Page</div>
+                                        <span class="page">{dalil.page}</span>
+                                    </div>
+                                    <div
+                                        class="prose text_id  text-sm col-span-2 mt-4"
+                                        set:html={dalil.text_id.replace(
+                                            /<p><\/p>|<p>&nbsp;<\/p>/g,
+                                            "",
+                                        )}
+                                    />
+                                    <div
+                                        class="prose text_en  text-sm col-span-2"
+                                        set:html={dalil.text_en.replace(
+                                            /<p><\/p>|<p>&nbsp;<\/p>/g,
+                                            "",
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                );
+            })
+        }
+    </ul>
+</div>
+<script
+    is:inline
+    src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+<script>
+    var options = {
+        valueNames: ["title", "text_id", "text_en", "kitab"],
+    };
+
+    var userList = new List("dalil-list", options);
+</script>
