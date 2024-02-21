@@ -6,11 +6,17 @@ let { data: data } = Astro.props;
     <header class="sticky top-0 bg-base-100 z-50">
         <!-- class="search" automagically makes an input a search field. -->
         <div class="p-5">
-            <input class="search input input-bordered w-full" placeholder="Search" />
+            <input
+                class="search input input-bordered w-full"
+                placeholder="Search"
+                id="dalil-list_search"
+            />
         </div>
 
         <!-- Child elements of container with class="list" becomes list items -->
-        <div class="grid grid-cols-12 text-sm font-semibold py-4 bg-base-200 px-4">
+        <div
+            class="grid grid-cols-12 text-sm font-semibold py-4 bg-base-200 px-4"
+        >
             <div
                 class="col-span-12 flex justify-between items-center sort cursor-pointer"
                 data-sort="title"
@@ -114,7 +120,12 @@ let { data: data } = Astro.props;
                                                 )
                                                 .map((tag) => {
                                                     return (
-                                                        <span class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer whitespace-nowrap" data-tag={tag}>{tag}</span>
+                                                        <span
+                                                            class="badge badge-xs badge-outline py-2 ml-1 cursor-pointer whitespace-nowrap"
+                                                            data-tag={tag}
+                                                        >
+                                                            {tag}
+                                                        </span>
                                                     );
                                                 })}
                                         </div>
@@ -139,15 +150,15 @@ let { data: data } = Astro.props;
                                         <div class="font-bold">Page</div>
                                         <span class="page">{dalil.page}</span>
                                     </div>
-                                    {
-                                        dalil.grading &&(
+                                    {dalil.grading && (
                                         <div class="text-sm col-span-1">
                                             <div class="font-bold">Grading</div>
-                                            <span class="page badge badge-success">{dalil.grading}</span>
+                                            <span class="grading badge badge-success">
+                                                {dalil.grading}
+                                            </span>
                                         </div>
-                                        )
-                                    }
-                                    
+                                    )}
+
                                     <div
                                         class="prose text_id  text-sm col-span-2 mt-2 pt-2 border-t-[2px]"
                                         set:html={dalil.text_id.replace(
@@ -176,8 +187,37 @@ let { data: data } = Astro.props;
     src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 <script>
     var options = {
-        valueNames: ["title", "text_id", "text_en", "kitab", "author", "volume", "page", "tag"],
+        valueNames: [
+            "title",
+            "text_id",
+            "text_en",
+            "kitab",
+            "author",
+            "volume",
+            "page",
+            "tag",
+            "grading",
+        ],
     };
 
     var userList = new List("dalil-list", options);
+    $("[data-tag], [data-grading]").click(function () {
+        let $searchinput = $("#dalil-list_search");
+        let currentVal = $searchinput.val();
+        let tag = $(this).data("tag") || $(this).data("grading");
+        // if currentVal is the same as the tag, then remove the tag from the search input
+        if (currentVal == tag) {
+            $searchinput.val("");
+            userList.search();
+            // Scroll to the top of the list
+            $searchinput[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            return;
+        }
+        // populate the search input with the tag
+        $searchinput.val(tag);
+        // trigger the search event
+        userList.search(tag);
+        // Scroll to the tag in the search input
+        $searchinput[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    });
 </script>
