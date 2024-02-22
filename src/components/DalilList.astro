@@ -210,7 +210,7 @@ let { data: data } = Astro.props;
             $searchinput.val("");
             userList.search();
             // Scroll to the top of the list
-            $searchinput[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            $(this).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
             return;
         }
         // populate the search input with the tag
@@ -218,6 +218,6 @@ let { data: data } = Astro.props;
         // trigger the search event
         userList.search(tag);
         // Scroll to the tag in the search input
-        $searchinput[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        $(this).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     });
 </script>
