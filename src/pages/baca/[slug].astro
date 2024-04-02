@@ -6,7 +6,7 @@ import TOC from "../../components/TOC.astro";
 import Footnotes from "../../components/Footnotes.astro";
 import { ViewTransitions } from "astro:transitions";
 
-const API_URL = "https://ks.valocg.xyz/wp-json/api/articles";
+const API_URL = "https://admin.mediakautsar.com/wp-json/api/articles";
 
 export async function getStaticPaths() {
     const articles = await fetchArticles();
