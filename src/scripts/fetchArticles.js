@@ -1,5 +1,5 @@
 // src/scripts/fetchArticles.js
-const API_URL = 'https://ks.valocg.xyz/wp-json/api/articles';
+const API_URL = 'https://admin.mediakautsar.com/wp-json/api/articles';
 
 async function fetchArticles() {
     const response = await fetch(API_URL);

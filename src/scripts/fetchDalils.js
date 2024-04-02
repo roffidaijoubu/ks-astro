@@ -1,5 +1,5 @@
 // src/scripts/fetchDalils.js
-const API_URL = 'https://ks.valocg.xyz/wp-json/api/dalil';
+const API_URL = 'https://admin.mediakautsar.com/wp-json/api/dalil';
 
 async function fetchDalils() {
     const response = await fetch(API_URL);

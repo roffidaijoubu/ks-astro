@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 async function fetchDalilApi() {
-  const response = await fetch('https://ks.valocg.xyz/wp-json/api/dalil');
+  const response = await fetch('https://admin.mediakautsar.com/wp-json/api/dalil');
   const data = await response.json();
   
   const dirname = path.dirname(fileURLToPath(import.meta.url));
